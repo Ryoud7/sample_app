@@ -14,3 +14,12 @@ class ActiveSupport::TestCase
 
   # （すべてのテストで使うその他のヘルパーメソッドは省略）
 end
+
+class ActiveSupport::TestCase
+  fixtures :all
+
+  # テストユーザーがログイン中の場合にtrueを返す
+  def is_logged_in?
+    !session[:user_id].nil?
+  end
+end
