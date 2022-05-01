@@ -8,6 +8,8 @@ class User < ApplicationRecord
                                    dependent:   :destroy
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
+  has_many :favorites, dependent: :destroy
+  has_many :likes, through: :favorites, source: :micropost
   attr_accessor :remember_token, :activation_token, :reset_token
   VALID_UNIQUE_NAME_REGEX = /\A[a-z0-9_]+\z/i
   before_save   :downcase_email
@@ -121,6 +123,25 @@ class User < ApplicationRecord
   def following?(other_user)
     following.include?(other_user)
   end
+  
+  
+  
+  # マイクロポストをライクする
+  def like(micropost)
+    likes << micropost
+  end
+
+  # マイクロポストをライク解除する
+  def unlike(micropost)
+    favorites.find_by(micropost_id: micropost.id).destroy
+  end
+
+  # 現在のユーザーがライクしていたらtrueを返す
+  def likes?(micropost)
+    likes.include?(micropost)
+  end
+  
+  
   
   private
 

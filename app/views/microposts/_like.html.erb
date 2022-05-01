@@ -1,0 +1,6 @@
+<span class="timestamp"><%=micropost.liked_by.count%>&nbsp;like</span>
+<%= form_for(current_user.favorites.build, remote: true) do |f| %>
+  <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
+  <%= button_tag(class: "btn-like" ) do %>
+<i class="far fa-heart heart-empty "></i>  <% end %>
+<% end %>

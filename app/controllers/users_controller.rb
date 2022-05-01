@@ -72,7 +72,7 @@ class UsersController < ApplicationController
     @user  = User.find(params[:id])
     @users = @user.following.paginate(page: params[:page])
     render 'show_follow'
-  end
+   end
 
   def followers
     @title = "Followers"
@@ -81,12 +81,21 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
 
+
+  def likes
+    @title = "Likes"
+    @user  = User.find(params[:id])
+    @microposts = @user.likes.paginate(page: params[:page])
+    render 'show_like'
+  end
+
+
   private
   
   
   def search_params
       params.require(:q).permit(:name_cont)
-    end
+  end
 
     def user_params
       params.require(:user).permit(:name, :email, :password,

@@ -14,6 +14,11 @@ class Micropost < ApplicationRecord
     image.variant(resize_to_limit: [500, 500])
   end
   
+  
+  has_many :favorites, dependent: :destroy
+  has_many :liked_by, through: :favorites, source: :user
+  
+  
   def Micropost.including_replies(user_id)
   # Micropostsテーブルから、下記のいずれか条件の投稿を取得する
   #   自分がフォローしている人
