@@ -9,15 +9,24 @@ class User < ApplicationRecord
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
   attr_accessor :remember_token, :activation_token, :reset_token
+  VALID_UNIQUE_NAME_REGEX = /\A[a-z0-9_]+\z/i
   before_save   :downcase_email
+  before_save   :downcase_unique_name
   before_create :create_activation_digest
   validates :name,  presence: true, length: { maximum: 50 }
+  validates :unique_name, presence: true,                              # 空でないこと
+                        length: { in: 5..15 },                       # 長さ5～15文字であること
+                        format: { with: VALID_UNIQUE_NAME_REGEX },   # 一意ユーザ名の正規表現にマッチすること
+                        uniqueness: { case_sensitive: false }        # 大文字小文字に関わらず一意であること
+
+  
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+ 
   
 
   # 渡された文字列のハッシュ値を返す
@@ -88,10 +97,14 @@ class User < ApplicationRecord
 
   # ユーザーのステータスフィードを返す
   def feed
-    following_ids = "SELECT followed_id FROM relationships
-                     WHERE follower_id = :user_id"
-    Micropost.where("user_id IN (#{following_ids})
-                     OR user_id = :user_id", user_id: id)
+  # Railsチュートリアルの中で入れた下記のロジックは
+  # including_repliesメソッドに含まれているのでコメントアウト
+  # following_ids = "SELECT followed_id FROM relationships
+  #                  WHERE follower_id = :user_id"
+  # Micropost.where("user_id IN (#{following_ids})
+  #                  OR user_id = :user_id", user_id: id)
+
+   Micropost.including_replies(id)
   end
 
   # ユーザーをフォローする
@@ -114,6 +127,10 @@ class User < ApplicationRecord
     # メールアドレスをすべて小文字にする
     def downcase_email
       self.email = email.downcase
+    end
+    
+    def downcase_unique_name
+      self.unique_name.downcase!
     end
 
     # 有効化トークンとダイジェストを作成および代入する

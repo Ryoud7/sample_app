@@ -4,6 +4,14 @@ class MicropostsController < ApplicationController
 
   def create
     @micropost = current_user.microposts.build(micropost_params)
+    re = /@([0-9a-z_]{5,15})/i
+    @micropost.content.match(re)
+    if $1
+    # マッチした一意ユーザ名は小文字にしてから検索します
+    reply_user = User.find_by(unique_name: $1.downcase)
+    # 一意ユーザ名を持つ返信先ユーザが存在すればin_reply_toカラムにそのユーザIDをセット
+    @micropost.in_reply_to = reply_user.id if reply_user
+    end
     @micropost.image.attach(params[:micropost][:image])
     if @micropost.save
       flash[:success] = "Micropost created!"

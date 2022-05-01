@@ -288,3 +288,13 @@ span.image {
     border: 0;
   }
 }
+
+/* Search form  */
+
+.search_form {
+  overflow: auto;
+  margin: 10px;
+  .input-group {
+    width: 305px;
+  }
+}

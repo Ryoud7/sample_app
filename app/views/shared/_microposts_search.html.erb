@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="search_form">
+    <%= search_form_for @q, url: @url do |f| %>
+      <%= f.label :content_cont, 'Micropost Search'%>
+      <div class="input-group">
+        <%= f.search_field :content_cont, placeholder: "Enter keyword..", class: 'form-control' %>
+        <span class="input-group-btn">
+          <%= f.submit 'Search', class: "btn btn-primary" %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+</div>

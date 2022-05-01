@@ -5,14 +5,30 @@ class UsersController < ApplicationController
   before_action :admin_user,     only: :destroy
 
   def index
-     @users = User.paginate(page: params[:page])
+    if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
+      @q = User.ransack(search_params, activated: true)
+      @title = "Serch Result"
+    else
+      @q = User.ransack(activated: true)
+      @title = "All users"
+    end
+    @users = @q.result.paginate(page: params[:page])
   end
 
   
-  def show
+   def show
     @user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])
-  end
+    redirect_to root_url and return unless @user.activated?
+    # @microposts = @user.microposts.paginate(page: params[:page])
+    if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
+      @q =  @user.microposts.ransack(microposts_search_params)
+      @microposts = @q.result.paginate(page: params[:page])
+    else
+      @q = Micropost.ransack
+      @microposts = @user.microposts.paginate(page: params[:page])
+    end
+    @url = user_path(@user)
+   end
 
   def new
     @user = User.new
@@ -66,10 +82,15 @@ class UsersController < ApplicationController
   end
 
   private
+  
+  
+  def search_params
+      params.require(:q).permit(:name_cont)
+    end
 
     def user_params
       params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
+                                   :password_confirmation, :unique_name)
     end
 
     # beforeフィルター
