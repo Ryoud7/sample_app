@@ -1,5 +1,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import url('https://fonts.googleapis.com/css?family=Londrina+Shadow');
+@import url('https://fonts.googleapis.com/css2?family=Yomogi&display=swap');
 
 /* mixins, variables, etc. */
 
@@ -9,7 +11,7 @@ $gray-medium-light: #eaeaea;
   -moz-box-sizing:    border-box;
   -webkit-box-sizing: border-box;
   box-sizing:         border-box;
-}
+ }
 
 
 $fa-font-path: '@fortawesome/fontawesome-free/webfonts';
@@ -24,6 +26,7 @@ $fa-font-path: '@fortawesome/fontawesome-free/webfonts';
 
 body {
   padding-top: 60px;
+  background-color: antiquewhite;
 }
 
 section {
@@ -74,8 +77,9 @@ p {
 #logo {
   float: left;
   margin-right: 10px;
-  font-size: 1.7em;
-  color: white;
+  font-size: 2.2em;
+  color: red;
+  font-family: 'Londrina Shadow', cursive;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
@@ -258,7 +262,7 @@ checkbox {
   padding: 0;
   li {
     padding: 10px 0;
-    border-top: 1px solid #e8e8e8;
+    border-top: 1px solid tan;
   }
   .user {
     margin-top: 5em;
@@ -273,7 +277,7 @@ checkbox {
     }
   }
   .timestamp {
-    color: $gray-light;
+    color: dimgray;
     display: block;
     margin-left: 60px;
   }
@@ -335,7 +339,50 @@ span.image {
   border: none;
   background-color: rgb(255, 255, 255);
   :hover {
-    background-color: rgb(255, 255, 255);
+    background-color: antiquewhite;
   }
 }
 
+
+/* ここから追記  */
+
+
+.container {
+  color: palevioletred;
+  font-family: 'Yomogi', cursive;
+}
+
+
+/* ヘッダー  */
+.navbar.navbar-fixed-top.navbar-inverse{
+   background-color: #ffe033;
+ 
+}
+
+
+
+.btn-like{
+  background-color: antiquewhite;
+}
+
+#file-upload-button{
+  background-color:black;
+}
+
+
+.btn.btn-primary{
+  background-color:palegreen;
+   color:black;
+   border-radius: 10px;
+}
+
+.center.jumbotron{
+  background-image:url(https://img.freepik.com/free-photo/front-view-of-beautiful-dog-with-copy-space_23-2148786561.jpg?t=st=1651480690~exp=1651481290~hmac=9b91588acf76846bd5b1659329ec4a7fdff1cbef282939499a868194dcc93382&w=1800);
+  background-size: cover;
+  padding-bottom: 150px ;
+  padding-top: 10px;
+}
+
+#micropost_content {
+border-radius: 12px;
+}
