@@ -8,6 +8,9 @@
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>
 
+<%= f.label :もう一度名前を入力して下さい %>
+      <%= f.text_field :unique_name, class: 'form-control' %>
+
       <%= f.label :email %>
       <%= f.email_field :email, class: 'form-control' %>
 
@@ -16,6 +19,8 @@
 
       <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation, class: 'form-control' %>
+      
+     
 
       <%= f.submit "Create my account", class: "btn btn-primary" %>
     <% end %>
