@@ -377,12 +377,22 @@ span.image {
 }
 
 .center.jumbotron{
-  background-image:url(https://img.freepik.com/free-photo/front-view-of-beautiful-dog-with-copy-space_23-2148786561.jpg?t=st=1651480690~exp=1651481290~hmac=9b91588acf76846bd5b1659329ec4a7fdff1cbef282939499a868194dcc93382&w=1800);
+  background-color: orange;
   background-size: cover;
+  
   padding-bottom: 150px ;
   padding-top: 10px;
+  border-radius: 10% 10% 10% 10% / 10% 10% 10% 10%  ;
+  
+ 
 }
 
 #micropost_content {
 border-radius: 12px;
 }
+
+.hitokoto{
+  font-size: 25px;
+  color: black;
+}
+
